@@ -23,21 +23,21 @@ const Cart = () => {
                 <CartTile cartItem={item} />
               ))}
             </div>
-          </div>
-          <div className="w-[300px]">
-            <div className="flex flex-col justify-center items-end p-5 space-y-5 mt-14">
-              <h1 className="font-bold text-lg text-red-800">
-                Your Cart Summary
-              </h1>
+            <div className="w-[300px]">
+              <div className="flex flex-col justify-center items-end p-5 space-y-5 mt-14">
+                <h1 className="font-bold text-lg text-red-800">
+                  Your Cart Summary
+                </h1>
+              </div>
+              <p>
+                <span className="text-gray-800  font-bold ">Total Item</span>
+                <span> :{cart.length}</span>
+              </p>
+              <p>
+                <span className="text-gray-800  font-bold ">Total Amount</span>
+                <span>:{totalCart}</span>
+              </p>
             </div>
-            <p>
-              <span className="text-gray-800  font-bold ">Total Item</span>
-              <span> :{cart.length}</span>
-            </p>
-            <p>
-              <span className="text-gray-800  font-bold ">Total Amount</span>
-              <span>:{totalCart}</span>
-            </p>
           </div>
         </>
       ) : (

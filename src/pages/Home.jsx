@@ -41,8 +41,6 @@ const Home = () => {
                 <ProductTile key={productItem.id} product={productItem} />
               ))
             : null}
-          render
-          <pre>{JSON.stringify(products, null, 2)}</pre>
         </div>
       )}
     </div>
