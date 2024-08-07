@@ -5,15 +5,15 @@ import Home from "./pages/Home";
 import Cart from "./pages/Cart";
 
 const App = () => {
-  return (
-    <div>
-      <Header />
-      <Routes>
-        <Route exac path="" element={<Home />} />
-        <Route path="/cart" element={<Cart />} />
-      </Routes>
-    </div>
-  );
+    return (
+        <div>
+            <Header />
+            <Routes>
+                <Route exac path="/myprojectapi10/" element={<Home />} />
+                <Route path="/myprojectapi10/cart" element={<Cart />} />
+            </Routes>
+        </div>
+    );
 };
 
 export default App;
