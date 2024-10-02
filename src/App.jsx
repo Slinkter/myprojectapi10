@@ -5,6 +5,8 @@ import Home from "./pages/Home";
 import Cart from "./pages/Cart";
 
 const App = () => {
+    window.document.title = "Proyecto 10 - Luis j Cueva";
+
     return (
         <>
             <Header />

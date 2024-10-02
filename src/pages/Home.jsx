@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Circles, TailSpin } from "react-loader-spinner";
+import { useEffect, useState } from "react";
+import { TailSpin } from "react-loader-spinner";
 import ProductTile from "../components/ProductTile";
 
 const Home = () => {

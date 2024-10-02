@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, removeFromCart } from "../store/slices/cart-slice";
+import PropTypes from "prop-types";
 
 const ProductTile = ({ product }) => {
     const { cart } = useSelector((state) => state);
@@ -32,7 +33,7 @@ const ProductTile = ({ product }) => {
                     <div className="flex flex-col bg-gray-100 justify-center items-center w-full">
                         <h1 className=" text-gray-700  ">
                             {" "}
-                            $ {product?.price}
+                            $ {product?.price.toFixed(2)}
                         </h1>
                     </div>
                 </div>
@@ -43,16 +44,29 @@ const ProductTile = ({ product }) => {
                                 ? handleRemoveFromCart
                                 : handleAddToCart
                         }
-                        className="bg-red-950 text-white border-2 rounded-lg font-bold p-4"
+                        className={
+                            cart.some((item) => item.id === product.id)
+                                ? "bg-red-600 w-full md:w-3/4 text-white border-2 rounded-lg font-bold p-4"
+                                : "bg-gray-700 w-full md:w-3/4 text-white border-2 rounded-lg font-bold p-4"
+                        }
                     >
                         {cart.some((item) => item.id === product?.id)
-                            ? "Remove from cart"
+                            ? "Remove "
                             : "Add to cart"}
                     </button>
                 </div>
             </div>
         </>
     );
+};
+
+ProductTile.propTypes = {
+    product: PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        image: PropTypes.string,
+        title: PropTypes.string,
+        price: PropTypes.number,
+    }).isRequired,
 };
 
 export default ProductTile;

@@ -8,7 +8,8 @@ const Cart = () => {
     const { cart } = useSelector((state) => state);
 
     useEffect(() => {
-        setTotalCart(cart.reduce((acc, curr) => acc + curr.price, 0));
+        const total = cart.reduce((acc, curr) => acc + curr.price, 0);
+        setTotalCart(total.toFixed(2));
     }, [cart]);
 
     console.log(cart);
@@ -25,7 +26,7 @@ const Cart = () => {
                         </div>
                         <div className=" border-red-600">
                             <div className="flex flex-col justify-center items-start p-5 space-y-5">
-                                <h1 className="font-bold text-lg text-red-800">
+                                <h1 className="font-bold text-lg text-red-600">
                                     Your Cart Summary
                                 </h1>
                                 <p>
@@ -38,7 +39,7 @@ const Cart = () => {
                                     <span className="text-gray-800  font-bold ">
                                         Total Amount
                                     </span>
-                                    <span>:{totalCart}</span>
+                                    <span> $:{totalCart}</span>
                                 </p>
                             </div>
                         </div>

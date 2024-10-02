@@ -24,18 +24,17 @@ const CartTile = ({ cartItem }) => {
                     </div>
 
                     <div className="flex flex-col justify-center items-center ">
-                        <h1 className="text-xl font-bold ">
+                        <h1 className="text-xl font-bold  ">
                             {cartItem?.title}
                         </h1>
 
                         <p className="text-red-900 font-bold">
-                            {" "}
                             $ {cartItem?.price}
                         </p>
                     </div>
                     <button
                         onClick={handleRemoveFromCart}
-                        className="w-full bg-red-950 text-white border-2  rounded-lg  font-bold p-4"
+                        className="w-full bg-red-600 text-white border-2  rounded-lg  font-bold p-4"
                     >
                         Remove
                     </button>
