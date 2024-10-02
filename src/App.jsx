@@ -6,13 +6,13 @@ import Cart from "./pages/Cart";
 
 const App = () => {
     return (
-        <div>
+        <>
             <Header />
             <Routes>
                 <Route exac path="/myprojectapi10/" element={<Home />} />
                 <Route path="/myprojectapi10/cart" element={<Cart />} />
             </Routes>
-        </div>
+        </>
     );
 };
 
