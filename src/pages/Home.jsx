@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Circles } from "react-loader-spinner";
+import { Circles, TailSpin } from "react-loader-spinner";
 import ProductTile from "../components/ProductTile";
 
 const Home = () => {
@@ -31,11 +31,20 @@ const Home = () => {
     return (
         <div>
             {loading ? (
-                <div className=" min-h-screen w-full flex justify-center items-center">
-                    <Circles />
+                <div className=" loadingcontainer">
+                    <TailSpin
+                        visible={true}
+                        height="80"
+                        width="80"
+                        color="red"
+                        ariaLabel="tail-spin-loading"
+                        radius="1"
+                        wrapperStyle={{}}
+                        wrapperClass=""
+                    />
                 </div>
             ) : (
-                <div className=" min-h-screen w-full mx-auto  max-w-6xl  grid  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4   ">
+                <div className="listcontainer  ">
                     {products && products.length
                         ? products.map((productItem) => (
                               <ProductTile
