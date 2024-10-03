@@ -3,33 +3,32 @@ import { TailSpin } from "react-loader-spinner";
 import ProductTile from "../components/ProductTile";
 
 const Home = () => {
+    const [loading, setloading] = useState(true);
     const [products, setProducts] = useState([]);
-    const [loading, setloading] = useState(false);
-
-    async function fetchListOfProducts() {
-        setloading(true);
-        try {
-            const url_api = "https://fakestoreapi.com/products";
-            const res = await fetch(url_api);
-            const data = await res.json();
-
-            if (data) {
-                console.log(data);
-                setloading(false);
-                setProducts(data);
-            }
-        } catch (error) {
-            console.log(error);
-            setloading(false);
-        }
-    }
 
     useEffect(() => {
+        async function fetchListOfProducts() {
+            setloading(true);
+            try {
+                const url_api = "https://fakestoreapi.com/products";
+                const res = await fetch(url_api);
+                const data = await res.json();
+                if (data) {
+                    setProducts(data);
+                    console.log(data);
+                }
+            } catch (error) {
+                console.log(error);
+            } finally {
+                setloading(false);
+            }
+        }
+
         fetchListOfProducts();
     }, []);
 
     return (
-        <div>
+        <>
             {loading ? (
                 <div className=" loadingcontainer">
                     <TailSpin
@@ -55,7 +54,7 @@ const Home = () => {
                         : null}
                 </div>
             )}
-        </div>
+        </>
     );
 };
 

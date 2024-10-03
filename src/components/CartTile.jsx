@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { removeFromCart } from "../store/slices/cart-slice";
-
+import PropTypes from "prop-types";
 const CartTile = ({ cartItem }) => {
     const dispatch = useDispatch();
 
@@ -42,6 +42,15 @@ const CartTile = ({ cartItem }) => {
             </div>
         </>
     );
+};
+
+CartTile.propTypes = {
+    cartItem: PropTypes.shape({
+        id: PropTypes.number,
+        image: PropTypes.string,
+        title: PropTypes.string,
+        price: PropTypes.number,
+    }).isRequired,
 };
 
 export default CartTile;

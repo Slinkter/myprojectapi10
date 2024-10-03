@@ -3,6 +3,14 @@
 @tailwind utilities;
 
 @layer components {
+    .headerNav {
+        @apply flex flex-col   justify-center items-center h-auto md:max-w-6xl mx-auto;
+    }
+
+    .headerNavUl {
+        @apply h-10 flex flex-wrap list-none items-center space-x-6 text-gray-800 font-semibold;
+    }
+
     .loadingcontainer {
         @apply min-h-screen w-full flex justify-center items-center;
     }

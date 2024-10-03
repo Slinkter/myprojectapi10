@@ -20,9 +20,9 @@ const ProductTile = ({ product }) => {
             <div className="cardProduct">
                 <div className="h-[160px]">
                     <img
+                        className=" object-container h-full w-full"
                         src={product?.image}
                         alt={product?.title}
-                        className=" object-container h-full w-full"
                     />
                 </div>
                 <div>
@@ -32,7 +32,6 @@ const ProductTile = ({ product }) => {
 
                     <div className="flex flex-col bg-gray-100 justify-center items-center w-full">
                         <h1 className=" text-gray-700  ">
-                            {" "}
                             $ {product?.price.toFixed(2)}
                         </h1>
                     </div>
