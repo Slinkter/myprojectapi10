@@ -11,10 +11,10 @@
         @apply h-10 flex flex-wrap list-none items-center space-x-6 text-gray-800 font-semibold;
     }
 
-    .loadingcontainer {
-        @apply min-h-screen w-full flex justify-center items-center;
+    .container-loading {
+        @apply min-h-[80vh] w-full flex justify-center items-center;
     }
-    .listcontainer {
+    .container-products {
         @apply min-h-screen w-full mx-auto  max-w-6xl  grid  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4;
     }
 

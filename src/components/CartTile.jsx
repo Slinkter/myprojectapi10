@@ -1,21 +1,29 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { removeFromCart } from "../store/slices/cart-slice";
 import PropTypes from "prop-types";
 const CartTile = ({ cartItem }) => {
+    //
     const dispatch = useDispatch();
 
-    function handleRemoveFromCart() {
+    /* 
+    1) useCallback: Reduce la recreación de funciones en cada renderizado, mejorando la eficiencia.
+    2) React.memo: Evita renders innecesarios si las props no cambian, mejorando el rendimiento
+    */
+
+    // La función handleRemoveFromCart se envuelve en
+    // useCallback para memorizarla y evitar su recreación en cada renderizado
+    const handleRemoveFromCart = useCallback(() => {
         dispatch(removeFromCart(cartItem.id));
-    }
+    }, [dispatch, cartItem.id]);
 
     console.log(cartItem);
 
     return (
         <>
-            <div className="flex items-center p-5 justify-center border-2 mt-2 mb-2 rounded-xl w-full">
+            <div className="p-5 flex items-center  justify-center border-2 my-2 rounded-xl w-full hover:shadow-lg ">
                 <div className="w-full grid grid-cols-1 md:grid-cols-3 justify-center items-center ">
-                    <div className="h-[160px]">
+                    <div className="h-[160px] flex items-center  justify-center ">
                         <img
                             src={cartItem.image}
                             alt={cartItem.title}
@@ -23,7 +31,7 @@ const CartTile = ({ cartItem }) => {
                         />
                     </div>
 
-                    <div className="flex flex-col justify-center items-center ">
+                    <div className="flex flex-col">
                         <h1 className="text-xl font-bold  ">
                             {cartItem?.title}
                         </h1>
@@ -34,7 +42,7 @@ const CartTile = ({ cartItem }) => {
                     </div>
                     <button
                         onClick={handleRemoveFromCart}
-                        className="w-full bg-red-600 text-white border-2  rounded-lg  font-bold p-4"
+                        className="w-full bg-red-600 text-white border-2  rounded-lg  font-bold p-4 hover:bg-red-900"
                     >
                         Remove
                     </button>
@@ -53,4 +61,4 @@ CartTile.propTypes = {
     }).isRequired,
 };
 
-export default CartTile;
+export default React.memo(CartTile);

@@ -6,15 +6,14 @@ import Cart from "./pages/Cart";
 
 const App = () => {
     window.document.title = "Proyecto 10 - Luis j Cueva";
-
     return (
-        <>
+        <React.Fragment>
             <Header />
             <Routes>
                 <Route exac path="/myprojectapi10/" element={<Home />} />
                 <Route path="/myprojectapi10/cart" element={<Cart />} />
             </Routes>
-        </>
+        </React.Fragment>
     );
 };
 
