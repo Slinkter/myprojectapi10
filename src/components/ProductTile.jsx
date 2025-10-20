@@ -19,8 +19,9 @@ const ProductTile = ({ product }) => {
 
     return (
         <div className="group flex flex-col rounded-xl overflow-hidden bg-surface-primary shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 h-full">
-            <div className="h-40 w-full flex justify-center p-4">
+            <div className="h-40 w-full flex justify-center p-4 bg-surface-secondary">
                 <img
+                    loading="lazy"
                     className="object-contain h-full w-full transition-transform duration-300 group-hover:scale-105"
                     src={product?.image}
                     alt={product?.title}
