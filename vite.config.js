@@ -3,5 +3,5 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
     plugins: [react()],
-    base: "https://slinkter.github.io/myprojectapi10",
+    base: "/myprojectapi10/",
 });

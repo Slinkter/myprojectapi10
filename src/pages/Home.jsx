@@ -1,6 +1,7 @@
-import React, { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { TailSpin } from "react-loader-spinner";
 import ProductTile from "../components/ProductTile";
+import ErrorComponent from "../components/ErrorComponent";
 
 const Home = () => {
     const [error, setError] = useState(null);
@@ -8,56 +9,46 @@ const Home = () => {
     const [products, setProducts] = useState([]);
 
     const fetchListOfProducts = useCallback(async () => {
-        console.group("FetchListOfProducts");
         setLoading(true);
         try {
             const url_api = "https://fakestoreapi.com/products";
             const res = await fetch(url_api);
-            console.log(res, res);
             if (!res.ok) {
-                throw new Error("error de api " + res.status);
+                throw new Error("Error fetching from API: " + res.status);
             }
             const data = await res.json();
-            console.log(data, data);
             if (!data) {
-                throw new Error("error de data " + " verificar");
+                throw new Error("Data from API is not valid.");
             }
             setProducts(data);
-            console.log(data);
         } catch (error) {
             setError(error.message);
-            console.log(error);
         } finally {
             setLoading(false);
         }
-        console.groupEnd();
-    }, []); // Dependencias vacías para que se memorice la función
+    }, []);
 
     useEffect(() => {
         fetchListOfProducts();
-    }, [fetchListOfProducts]); // Añadir fetchListOfProducts como dependencia
+    }, [fetchListOfProducts]);
 
     return (
         <>
-            {!loading && error ? (
-                <ErrorComponent title="Error:" message={error} />
-            ) : null}
+            {error && <ErrorComponent title="Error:" message={error} />}
 
             {loading ? (
-                <div className="container-loading">
+                <div className="min-h-[80vh] w-full flex justify-center items-center">
                     <TailSpin
                         visible={true}
                         height="80"
                         width="80"
-                        color="red"
+                        color="#e53e3e" // Corresponds to theme.colors.destructive.DEFAULT
                         ariaLabel="tail-spin-loading"
                         radius="1"
-                        wrapperStyle={{}}
-                        wrapperClass=""
                     />
                 </div>
             ) : (
-                <div className="container-products">
+                <div className="min-h-screen w-full mx-auto max-w-6xl grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-4 pt-6">
                     {products.length > 0 ? (
                         products.map((productItem) => (
                             <ProductTile
@@ -74,18 +65,4 @@ const Home = () => {
     );
 };
 
-export default React.memo(Home);
-
-const ErrorComponent = ({ title, message }) => {
-    return (
-        <div className="min-h-screen w-full flex justify-center items-center">
-            <div
-                className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative text-center"
-                role="alert"
-            >
-                <h1 className="font-bold">{title}</h1>
-                <span className="block sm:inline">{message}</span>
-            </div>
-        </div>
-    );
-};
+export default Home;

@@ -6,6 +6,5 @@ const store = configureStore({
         cart: cardReducer,
     },
 });
-console.log(store);
 
 export default store;

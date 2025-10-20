@@ -2,23 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components {
-    .headerNav {
-        @apply flex flex-col   justify-center items-center h-auto md:max-w-6xl mx-auto;
-    }
-
-    .headerNavUl {
-        @apply h-10 flex flex-wrap list-none items-center space-x-6 text-gray-800 font-semibold;
-    }
-
-    .container-loading {
-        @apply min-h-[80vh] w-full flex justify-center items-center;
-    }
-    .container-products {
-        @apply min-h-screen w-full mx-auto  max-w-6xl  grid  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4;
-    }
-
-    .cardProduct {
-        @apply m-4 h-[360px]  flex flex-col items-center border-2   gap-2 p-4   rounded-xl;
-    }
+@layer base {
+  body {
+    @apply bg-surface-secondary text-primary;
+  }
 }
