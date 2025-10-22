@@ -5,6 +5,12 @@ import PropTypes from "prop-types";
 import { FaTrash } from "react-icons/fa";
 import { formatPrice } from "../utils/format";
 
+/**
+ * @description A component that displays a single item in the shopping cart.
+ * @param {{cartItem: object}} props - The props for the component.
+ * @param {object} props.cartItem - The cart item object to display.
+ * @returns {JSX.Element} The JSX for the cart tile.
+ */
 const CartTile = ({ cartItem }) => {
     const dispatch = useDispatch();
 
@@ -13,12 +19,12 @@ const CartTile = ({ cartItem }) => {
     }, [dispatch, cartItem.id]);
 
     return (
-        <div className="flex flex-col sm:flex-row items-center p-4 bg-base-100 rounded-lg shadow-md gap-4 w-full transition-shadow duration-300 hover:shadow-lg hover:-translate-y-1 transform-gpu">
-            <div className="w-20 h-20 sm:w-24 sm:h-24 flex-shrink-0 bg-white rounded-lg flex items-center justify-center">
+        <div className="cart-tile">
+            <div className="cart-tile-image-container">
                 <img
                     src={cartItem.image}
                     alt={cartItem.title}
-                    className="w-full h-full object-contain p-2 transition-all duration-300 ease-in-out group-hover:scale-105"
+                    className="cart-tile-image"
                 />
             </div>
             <div className="flex-grow flex flex-col text-center sm:text-left">
@@ -31,7 +37,7 @@ const CartTile = ({ cartItem }) => {
             </div>
             <button
                 onClick={handleRemoveFromCart}
-                className="text-danger hover:text-red-700 transition-colors duration-300 ease-in-out p-2 rounded-full mt-2 sm:mt-0 focus:outline-none focus:ring-2 focus:ring-danger"
+                className="cart-tile-remove-button"
                 aria-label="Remove item"
             >
                 <FaTrash className="text-xl" />
@@ -41,6 +47,9 @@ const CartTile = ({ cartItem }) => {
 };
 
 CartTile.propTypes = {
+    /**
+     * The cart item object to display.
+     */
     cartItem: PropTypes.shape({
         id: PropTypes.number,
         image: PropTypes.string,

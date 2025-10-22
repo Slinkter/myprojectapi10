@@ -1,58 +1,65 @@
-# Project API 10
+# Carrito de Compras con React y Redux
 
--   se agrega [] en vite.config
-    base: "https://slinkter.github.io/myprojectapi0x",
--   se instala paquete de github
-    npm i --save-dev gh-pages
--   ir a package.json predeply y deploy
+![Captura de pantalla de la aplicación de carrito de compras](./api10.png)
 
-```javascript
-"scripts": {
-"dev": "vite",
-"build": "vite build",
-"lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-"preview": "vite preview",
-"predeploy":"npm run build",
-"deploy" : "gh-pages -d dist"
-},
+Este proyecto es una aplicación web de carrito de compras creada con React. Permite a los usuarios ver una lista de productos, agregarlos a un carrito de compras y ver los artículos en el carrito.
+
+## Características
+
+-   **Listado de productos:** Muestra una lista de productos obtenidos de una API.
+-   **Gestión del carrito de compras:** Los usuarios pueden agregar y eliminar productos del carrito.
+-   **Resumen del carrito:** Muestra la cantidad total de artículos y el precio total en el carrito.
+-   **Diseño receptivo:** La aplicación está diseñada para funcionar en diferentes tamaños de pantalla.
+
+## Arquitectura
+
+La aplicación sigue una arquitectura basada en componentes y utiliza Redux para la gestión del estado centralizado.
+
+### Estructura de carpetas
 
 ```
+src/
+├── components/      # Componentes de la interfaz de usuario reutilizables
+├── pages/           # Componentes de página (Home, Cart)
+├── store/           # Configuración de Redux (store, slices)
+│   └── slices/      # Slices de Redux para diferentes partes del estado
+└── utils/           # Funciones de utilidad
+```
 
--   y ejecutar en terminal
+### Gestión de estado con Redux
 
-npm run deploy
+La aplicación utiliza Redux Toolkit para una gestión de estado eficiente y predecible.
 
-##
+-   **`store.js`:** Configura el store de Redux, combinando los diferentes reductores de slice.
+-   **`cart-slice.js`:** Gestiona el estado del carrito de compras (agregar y eliminar artículos).
+-   **`product-slice.js`:** Gestiona el estado de los productos, incluyendo la obtención de datos, el estado de carga y los errores. Utiliza `createAsyncThunk` para manejar acciones asincrónicas para obtener productos de la API.
 
-![alt text](./api10.png)
+## Instalación
 
-https://github.dev/sangammukherjee/shopping-cart-25-reactjs-interview-projects
+1.  Clona el repositorio:
+    ```bash
+    git clone https://github.com/slinkter/myprojectapi0x.git
+    ```
 
-https://fakestoreapi.com/
+2.  Navega al directorio del proyecto:
+    ```bash
+    cd myprojectapi0x
+    ```
 
-## ¿Qué es Redux?
+3.  Instala las dependencias:
+    ```bash
+    npm install
+    ```
 
-Redux es una biblioteca de gestión de estado predecible para aplicaciones JavaScript. Imagina que es un almacén central donde se guarda toda la información que necesita tu aplicación (como el contenido de un carrito de compras, los datos de un usuario, etc.). Al cambiar esta información en un solo lugar, todos los componentes de tu aplicación se actualizan automáticamente.
+## Scripts disponibles
 
-### ¿Por qué usar Redux?
+En el directorio del proyecto, puedes ejecutar:
 
--   **Gestión de estado compleja:** Cuando tu aplicación crece y tiene mucho estado que gestionar, Redux te ayuda a mantenerlo organizado y evitar problemas de sincronización.
--   **Aplicaciones grandes y escalables:** Redux es ideal para aplicaciones grandes donde múltiples componentes necesitan acceder y modificar el mismo estado.
--   **Comunidad y herramientas:** Redux tiene una gran comunidad y muchas herramientas que facilitan su uso.
+-   `npm run dev`: Inicia la aplicación en modo de desarrollo.
+-   `npm run build`: Compila la aplicación para producción.
+-   `npm run preview`: Sirve la compilación de producción localmente.
+-   `npm run deploy`: Despliega la aplicación en GitHub Pages.
 
-### Conceptos clave:
+## API
 
--   **Store:** El almacén central donde se guarda todo el estado de la aplicación.Almacena la lista de productos en el carrito.
--   **Actions:** Objetos que describen un cambio que se quiere hacer en el estado.Representan las acciones que pueden realizarse (agregar, eliminar).
--   **Reducers:** Funciones puras que toman el estado actual y una acción y devuelven un nuevo estado. Actualizan el estado del store en respuesta a las acciones.
--   **Dispatch:** Función que se utiliza para enviar una acción al store.
--   **State:** La representación actual de la aplicación en un momento dado.
--   **Provider:** Componente de React Redux que conecta tu aplicación al store.
-
-### ¿Es lo mismo que useReducer y useContext?
-
-No exactamente. Aunque tanto Redux como useReducer y useContext se utilizan para gestionar el estado en React, tienen diferentes enfoques:
-
--   **useReducer:** Es un hook de React que te permite gestionar el estado local de un componente. Es ideal para estados simples y componentes aislados.
--   **useContext:** También es un hook de React, pero te permite compartir estado entre componentes que están en diferentes niveles de la jerarquía del componente. Es útil para compartir datos globales, como el tema o la configuración del usuario.
--   **Redux:** Es una biblioteca externa que proporciona una solución más estructurada y escalable para gestionar el estado en aplicaciones grandes. Es ideal para aplicaciones con mucho estado y múltiples componentes que necesitan acceder a él.
+Este proyecto utiliza la [Fake Store API](https://fakestoreapi.com/) para obtener datos de productos.

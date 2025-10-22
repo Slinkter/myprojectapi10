@@ -1,10 +1,14 @@
+/**
+ * @description A skeleton loader component for the product tile.
+ * @returns {JSX.Element} The JSX for the skeleton tile.
+ */
 const SkeletonTile = () => {
     return (
-        <div className="flex flex-col rounded-xl overflow-hidden bg-surface-primary shadow-md h-full">
+        <div className="card">
             {/* Image Placeholder */}
             <div className="h-40 w-full bg-gray-300 animate-pulse"></div>
 
-            <div className="p-4 w-full flex flex-col flex-grow">
+            <div className="card-content">
                 {/* Category Placeholder */}
                 <div className="h-4 w-1/2 bg-gray-300 rounded animate-pulse"></div>
 

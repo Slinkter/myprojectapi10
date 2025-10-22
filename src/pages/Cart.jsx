@@ -4,6 +4,10 @@ import { Link } from "react-router-dom";
 import CartTile from "../components/CartTile";
 import { formatPrice } from "../utils/format";
 
+/**
+ * @description The cart page component.
+ * @returns {JSX.Element} The JSX for the cart page.
+ */
 const Cart = () => {
     const cart = useSelector((state) => state.cart);
 
@@ -12,12 +16,12 @@ const Cart = () => {
     }, [cart]);
 
     return (
-        <div className="max-w-6xl mx-auto p-4 min-h-[80vh]">
+        <div className="page-container">
             {cart && cart.length ? (
                 <div className="flex flex-col lg:flex-row gap-8">
                     {/* Summary Column (appears first on mobile) */}
                     <div className="lg:w-1/3 lg:order-2">
-                        <div className="bg-base-100 rounded-lg shadow-md p-6 sticky top-24">
+                        <div className="cart-summary">
                             <h2 className="text-lg font-bold mb-4 border-b pb-2">
                                 Order Summary
                             </h2>
@@ -31,7 +35,7 @@ const Cart = () => {
                                     {formatPrice(totalCart)}
                                 </p>
                             </div>
-                            <button className="w-full mt-6 bg-brand text-white font-bold py-3 rounded-lg hover:bg-opacity-90 transition-colors duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-brand">
+                            <button className="btn btn-brand w-full mt-6">
                                 Proceed to Checkout
                             </button>
                         </div>
@@ -54,7 +58,7 @@ const Cart = () => {
                         yet.
                     </p>
                     <Link to={"/"}>
-                        <button className="bg-brand text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-opacity-90 transition-colors duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-brand">
+                        <button className="btn btn-brand">
                             Shop Now
                         </button>
                     </Link>

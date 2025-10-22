@@ -14,6 +14,9 @@ export default {
                     700: "#6b1414",
                     500: "#a21f1f",
                 },
+                brand: {
+                    DEFAULT: "#3182ce",
+                },
                 destructive: {
                     DEFAULT: "#e53e3e",
                 },
