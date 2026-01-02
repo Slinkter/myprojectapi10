@@ -1,0 +1,7 @@
+The build process is currently stuck because I cannot fully delete the `node_modules` directory. This is due to file locks, likely caused by a previous Node.js process (like a failed build or dev server run) that is still holding onto some files, particularly `esbuild.exe` and `rollup.win32-x64-msvc.node`.
+
+To proceed, please **manually delete the `node_modules` and `dist` folders** from the project directory:
+
+`C:\Users\luisj\Documents\myprojectapi10\`
+
+Once you have confirmed these folders are deleted, please let me know, and I will proceed with reinstalling the dependencies and attempting the build again.

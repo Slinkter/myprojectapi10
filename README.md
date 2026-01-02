@@ -1,65 +1,62 @@
-# Carrito de Compras con React y Redux
+# React Shopping Cart (Refactored)
 
-![Captura de pantalla de la aplicación de carrito de compras](./api10.png)
+![Shopping Cart Application Screenshot](./api10.png)
 
-Este proyecto es una aplicación web de carrito de compras creada con React. Permite a los usuarios ver una lista de productos, agregarlos a un carrito de compras y ver los artículos en el carrito.
+This project is a modern web-based shopping cart application built with **React**, **Redux Toolkit**, and **Tailwind CSS**. It demonstrates a scalable **Feature-Sliced Design (FSD)** architecture, focusing on separation of concerns, reusability, and clean code principles.
 
-## Características
+## 🚀 Features
 
--   **Listado de productos:** Muestra una lista de productos obtenidos de una API.
--   **Gestión del carrito de compras:** Los usuarios pueden agregar y eliminar productos del carrito.
--   **Resumen del carrito:** Muestra la cantidad total de artículos y el precio total en el carrito.
--   **Diseño receptivo:** La aplicación está diseñada para funcionar en diferentes tamaños de pantalla.
+-   **Dynamic Product Listing:** Displays products fetched from a remote API.
+-   **Smart Cart Management:** "Add to Cart" functionality extracted as a standalone feature.
+-   **Optimized Performance:** Uses Redux selectors for derived state (e.g., cart totals).
+-   **Responsive UI:** Fully responsive design using Tailwind CSS.
+-   **Clean Architecture:** strictly separated layers (App, Pages, Features, Entities, Shared).
 
-## Arquitectura
+## 🛠️ Architecture & Design Patterns
 
-La aplicación sigue una arquitectura basada en componentes y utiliza Redux para la gestión del estado centralizado.
+The project has been refactored to follow **Clean Architecture** principles:
 
-### Estructura de carpetas
+### Key Improvements
+-   **Decoupling Layers:** `ProductTile` (Entity) no longer depends on `Cart` logic. The "Add to Cart" action is now a separate feature (`features/cart/ui/AddToCartButton`) injected into the UI.
+-   **Custom Hooks & Selectors:** Business logic (like calculating totals) is encapsulated in Redux Selectors (`selectCartTotal`) rather than inline component code.
+-   **Side Effect Management:** Application title management moved to `useEffect` to avoid render-phase side effects.
 
+### Directory Structure
 ```
 src/
-├── components/      # Componentes de la interfaz de usuario reutilizables
-├── pages/           # Componentes de página (Home, Cart)
-├── store/           # Configuración de Redux (store, slices)
-│   └── slices/      # Slices de Redux para diferentes partes del estado
-└── utils/           # Funciones de utilidad
+├── app/          # Global config, providers, and entry point
+├── pages/        # Route components (Home, Cart) composing widgets/features
+├── widgets/      # Composition of features and entities (e.g., Header)
+├── features/     # User interactions (e.g., AddToCartButton)
+├── entities/     # Domain data and UI (ProductTile, CartTile, Slices)
+└── shared/       # Reusable primitives (hooks, ui-kit, utils)
 ```
 
-### Gestión de estado con Redux
+## 💻 Installation & Setup
 
-La aplicación utiliza Redux Toolkit para una gestión de estado eficiente y predecible.
-
--   **`store.js`:** Configura el store de Redux, combinando los diferentes reductores de slice.
--   **`cart-slice.js`:** Gestiona el estado del carrito de compras (agregar y eliminar artículos).
--   **`product-slice.js`:** Gestiona el estado de los productos, incluyendo la obtención de datos, el estado de carga y los errores. Utiliza `createAsyncThunk` para manejar acciones asincrónicas para obtener productos de la API.
-
-## Instalación
-
-1.  Clona el repositorio:
+1.  **Clone the repository**:
     ```bash
-    git clone https://github.com/slinkter/myprojectapi0x.git
+    git clone https://github.com/slinkter/myprojectapi10.git
+    cd myprojectapi10
     ```
 
-2.  Navega al directorio del proyecto:
+2.  **Install dependencies** (using pnpm):
     ```bash
-    cd myprojectapi0x
+    pnpm install
     ```
 
-3.  Instala las dependencias:
+3.  **Run locally**:
     ```bash
-    npm install
+    pnpm run dev
     ```
 
-## Scripts disponibles
+4.  **Build for production**:
+    ```bash
+    pnpm run build
+    ```
 
-En el directorio del proyecto, puedes ejecutar:
+## 📚 Technical Glossary
 
--   `npm run dev`: Inicia la aplicación en modo de desarrollo.
--   `npm run build`: Compila la aplicación para producción.
--   `npm run preview`: Sirve la compilación de producción localmente.
--   `npm run deploy`: Despliega la aplicación en GitHub Pages.
-
-## API
-
-Este proyecto utiliza la [Fake Store API](https://fakestoreapi.com/) para obtener datos de productos.
+-   **Feature-Sliced Design (FSD):** Architectural methodology for frontend projects.
+-   **Redux Toolkit:** Standard way to write Redux logic.
+-   **Tailwind CSS:** Utility-first CSS framework.
