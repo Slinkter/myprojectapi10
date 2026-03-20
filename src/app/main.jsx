@@ -6,9 +6,9 @@ import App from "@/app/App.jsx";
 import "@/app/styles/index.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-    <Provider store={store}>
-        <BrowserRouter basename="/myprojectapi10/">
-            <App />
-        </BrowserRouter>
-    </Provider>
+  <Provider store={store}>
+    <BrowserRouter basename="/myprojectapi10/">
+      <App />
+    </BrowserRouter>
+  </Provider>
 );

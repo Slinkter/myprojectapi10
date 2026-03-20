@@ -1,44 +1,47 @@
 import { useSelector } from "react-redux";
-import CartTile from "@/entities/cart/ui/CartTile";
-import CartSummary from "@/widgets/CartSummary/CartSummary";
-import EmptyState from "@/shared/ui/EmptyState";
+import { selectCartItems } from "@/entities/cart/model/cartSlice";
+import { CartTile } from "@/entities/cart/ui/CartTile";
+import { CartSummary } from "@/widgets/CartSummary/CartSummary";
+import { StateBoundary } from "@/shared/ui/StateBoundary";
+import { cn } from "@/shared/lib/cn";
 
 /**
+ * @page Cart
  * @description The Cart page, acting as a container component.
  * @returns {JSX.Element} The JSX for the cart page.
  */
-const Cart = () => {
-  const { items: cartItems } = useSelector((state) => state.cart);
+export default function Cart() {
+  const cartItems = useSelector(selectCartItems);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 min-h-screen">
-      {cartItems && cartItems.length > 0 ? (
-        <div className="flex flex-col lg:flex-row gap-12">
-          {/* Summary Column (Right/Top on desktop, Bottom on mobile) */}
-          <div className="lg:w-1/3 lg:order-2 h-fit">
+    <div className={cn("mx-auto min-h-screen max-w-7xl px-4 py-12 sm:px-6 lg:px-8")}>
+      <StateBoundary
+        isLoading={false}
+        hasError={false}
+        isEmpty={!cartItems || cartItems.length === 0}
+        emptyMessage="Tu carrito está vacío"
+      >
+        <div className={cn("flex flex-col gap-12 lg:flex-row")}>
+          {/* Summary Column */}
+          <div className={cn("h-fit lg:order-2 lg:w-1/3")}>
             <CartSummary />
           </div>
 
           {/* Cart Items Column */}
-          <div className="lg:w-2/3 lg:order-1 flex flex-col gap-6">
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">
-              Shopping Cart
-            </h1>
-            {cartItems.map((item) => (
-              <CartTile key={item.id} cartItem={item} />
+          <div className={cn("flex flex-col gap-6 lg:order-1 lg:w-2/3")}>
+            <h1 className={cn("mb-2 text-2xl font-bold text-gray-900")}>Carrito de Compras</h1>
+            {cartItems.map((item, index) => (
+              <div
+                key={item.product.id}
+                className={cn("animate-fade-in-up")}
+                style={{ animationDelay: `${index * 50}ms` }}
+              >
+                <CartTile cartItem={item} />
+              </div>
             ))}
           </div>
         </div>
-      ) : (
-        <EmptyState
-          title="Your cart is empty!"
-          description="Looks like you haven't added anything to your cart yet. Explore our products and find something you love."
-          actionLabel="Shop Now"
-          to="/"
-        />
-      )}
+      </StateBoundary>
     </div>
   );
-};
-
-export default Cart;
+}

@@ -1,67 +1,119 @@
 import { useCallback } from "react";
 import { useDispatch } from "react-redux";
-import { removeFromCart } from "@/entities/cart/model/cartSlice";
+import { removeFromCart, updateQuantity } from "@/entities/cart/model/cartSlice";
 import PropTypes from "prop-types";
-import { FaTrash } from "react-icons/fa";
-import { formatPrice } from "@/shared/lib/priceFormatter";
+import { FaTrash, FaMinus, FaPlus } from "react-icons/fa";
+import { formatPrice } from "@/shared/lib/formatters";
+import { cn } from "@/shared/lib/cn";
 
 /**
+ * @component CartTile
  * @description A component that displays a single item in the shopping cart.
- * @param {{cartItem: object}} props - The props for the component.
- * @param {object} props.cartItem - The cart item object to display.
+ * @param {object} props - The props for the component.
+ * @param {import('../model/cartSlice').CartItem} props.cartItem - The cart item object to display.
  * @returns {JSX.Element} The JSX for the cart tile.
  */
-const CartTile = ({ cartItem }) => {
+export function CartTile({ cartItem }) {
   const dispatch = useDispatch();
+  const { product, quantity } = cartItem;
 
-  const handleRemoveFromCart = useCallback(() => {
-    dispatch(removeFromCart(cartItem.id));
-  }, [dispatch, cartItem.id]);
+  const handleRemove = useCallback(() => {
+    dispatch(removeFromCart(product.id));
+  }, [dispatch, product.id]);
+
+  const handleIncrease = useCallback(() => {
+    dispatch(updateQuantity({ id: product.id, quantity: quantity + 1 }));
+  }, [dispatch, product.id, quantity]);
+
+  const handleDecrease = useCallback(() => {
+    dispatch(updateQuantity({ id: product.id, quantity: quantity - 1 }));
+  }, [dispatch, product.id, quantity]);
 
   return (
-    <div className="flex flex-col sm:flex-row items-center p-6 bg-white rounded-xl shadow-sm border border-gray-100 gap-6 transition-all duration-300 hover:shadow-md hover:border-indigo-100 group">
-      <div className="w-24 h-24 sm:w-32 sm:h-32 flex-shrink-0 bg-gray-50 rounded-lg p-3 flex items-center justify-center border border-gray-50">
+    <article
+      className={cn(
+        "group flex flex-col items-center gap-6 rounded-xl border border-gray-100 bg-white p-6 shadow-sm transition-all duration-300 hover:border-indigo-100 hover:shadow-md sm:flex-row"
+      )}
+    >
+      <div
+        className={cn(
+          "flex h-24 w-24 flex-shrink-0 items-center justify-center rounded-lg border border-gray-50 bg-gray-50 p-3 sm:h-32 sm:w-32"
+        )}
+      >
         <img
-          src={cartItem.image}
-          alt={cartItem.title}
-          className="w-full h-full object-contain mix-blend-multiply transition-transform duration-300 group-hover:scale-105"
+          src={product.image}
+          alt={product.title}
+          className={cn(
+            "h-full w-full object-contain mix-blend-multiply transition-transform duration-300 group-hover:scale-105"
+          )}
         />
       </div>
 
-      <div className="flex-grow flex flex-col items-center sm:items-start text-center sm:text-left space-y-2">
-        <h1 className="text-lg font-bold text-gray-800 line-clamp-1 group-hover:text-indigo-600 transition-colors">
-          {cartItem?.title}
+      <div
+        className={cn(
+          "flex flex-grow flex-col items-center space-y-2 text-center sm:items-start sm:text-left"
+        )}
+      >
+        <h1
+          className={cn(
+            "line-clamp-1 text-lg font-bold text-gray-800 transition-colors group-hover:text-indigo-600"
+          )}
+        >
+          {product.title}
         </h1>
-        <p className="text-sm text-gray-500 capitalize px-2 py-1 bg-gray-100 rounded-md">
-          Category: {cartItem?.category || "General"}
+        <p className={cn("rounded-md bg-gray-100 px-2 py-1 text-sm capitalize text-gray-500")}>
+          Categoría: {product.category || "General"}
         </p>
-        <p className="text-xl font-bold text-gray-900 mt-2">
-          {formatPrice(cartItem?.price)}
-        </p>
+        <p className={cn("mt-2 text-xl font-bold text-gray-900")}>{formatPrice(product.price)}</p>
       </div>
 
-      <button
-        onClick={handleRemoveFromCart}
-        className="p-3 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-red-500"
-        aria-label="Remove item"
-        title="Remove from cart"
-      >
-        <FaTrash className="text-lg" />
-      </button>
-    </div>
+      <div className={cn("mt-4 flex items-center gap-4 sm:mt-0")}>
+        <div className={cn("flex items-center overflow-hidden rounded-lg border border-gray-200")}>
+          <button
+            onClick={handleDecrease}
+            className={cn(
+              "p-2 text-gray-500 transition-colors hover:bg-gray-100 focus-visible:outline-none"
+            )}
+            aria-label="Disminuir cantidad"
+          >
+            <FaMinus className="text-xs" />
+          </button>
+          <span className={cn("px-4 py-2 text-sm font-semibold text-gray-800")}>{quantity}</span>
+          <button
+            onClick={handleIncrease}
+            className={cn(
+              "p-2 text-gray-500 transition-colors hover:bg-gray-100 focus-visible:outline-none"
+            )}
+            aria-label="Aumentar cantidad"
+          >
+            <FaPlus className="text-xs" />
+          </button>
+        </div>
+        <button
+          onClick={handleRemove}
+          className={cn(
+            "rounded-full p-3 text-gray-400 transition-all duration-300 hover:bg-red-50 hover:text-red-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500"
+          )}
+          aria-label="Eliminar artículo"
+          title="Eliminar del carrito"
+        >
+          <FaTrash className="text-lg" />
+        </button>
+      </div>
+    </article>
   );
-};
+}
 
 CartTile.propTypes = {
-  /**
-   * The cart item object to display.
-   */
   cartItem: PropTypes.shape({
-    id: PropTypes.number,
-    image: PropTypes.string,
-    title: PropTypes.string,
-    category: PropTypes.string,
-    price: PropTypes.number,
+    product: PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      image: PropTypes.string,
+      title: PropTypes.string,
+      category: PropTypes.string,
+      price: PropTypes.number,
+    }).isRequired,
+    quantity: PropTypes.number.isRequired,
   }).isRequired,
 };
 

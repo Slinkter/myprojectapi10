@@ -1,19 +1,33 @@
 import PropTypes from "prop-types";
+import { cn } from "@/shared/lib/cn";
 
 /**
+ * @component ErrorComponent
  * @description A component to display an error message.
- * @param {{title: string, message: string}} props - The props for the component.
- * @param {string} props.title - The title of the error.
- * @param {string} props.message - The error message.
+ * @param {object} props - The props for the component.
+ * @param {string} [props.title] - The title of the error.
+ * @param {string} [props.message] - The error message.
  * @returns {JSX.Element} The JSX for the error component.
  */
-const ErrorComponent = ({ title, message }) => {
+export function ErrorComponent({
+  title = "Error",
+  message = "Ha ocurrido un error inesperado.",
+  className,
+}) {
   return (
-    <div className="min-h-[50vh] w-full flex justify-center items-center p-4">
-      <div className="max-w-md w-full bg-red-50 border border-red-100 text-red-900 px-6 py-8 rounded-2xl shadow-sm text-center">
-        <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100 mb-4">
+    <div className={cn("flex min-h-[50vh] w-full items-center justify-center p-4", className)}>
+      <div
+        className={cn(
+          "w-full max-w-md rounded-2xl border border-red-100 bg-red-50 px-6 py-8 text-center text-red-900 shadow-sm"
+        )}
+      >
+        <div
+          className={cn(
+            "mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-red-100"
+          )}
+        >
           <svg
-            className="h-6 w-6 text-red-600"
+            className={cn("h-6 w-6 text-red-600")}
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -26,24 +40,17 @@ const ErrorComponent = ({ title, message }) => {
             />
           </svg>
         </div>
-        <h3 className="text-lg leading-6 font-bold text-red-900 mb-2">
-          {title}
-        </h3>
-        <p className="text-sm text-red-600">{message}</p>
+        <h3 className={cn("mb-2 text-lg font-bold leading-6 text-red-900")}>{title}</h3>
+        <p className={cn("text-sm text-red-600")}>{message}</p>
       </div>
     </div>
   );
-};
+}
 
 ErrorComponent.propTypes = {
-  /**
-   * The title of the error.
-   */
-  title: PropTypes.string.isRequired,
-  /**
-   * The error message.
-   */
-  message: PropTypes.string.isRequired,
+  title: PropTypes.string,
+  message: PropTypes.string,
+  className: PropTypes.string,
 };
 
 export default ErrorComponent;

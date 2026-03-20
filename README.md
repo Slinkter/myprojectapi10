@@ -55,8 +55,16 @@ src/
     pnpm run build
     ```
 
-## 📚 Technical Glossary
+## 🎓 Case Study (For Software Engineering Students)
 
--   **Feature-Sliced Design (FSD):** Architectural methodology for frontend projects.
--   **Redux Toolkit:** Standard way to write Redux logic.
--   **Tailwind CSS:** Utility-first CSS framework.
+This repository serves as a **production-ready Case Study** for software engineering students, demonstrating advanced React patterns without the overhead of TypeScript. 
+
+We have prepared a comprehensive guide explaining the **"Why"** behind every architectural decision:
+
+👉 **[Read the Full Technical Case Study Here](./src/docs/case-study/README.md)**
+
+Inside you will learn about:
+1. **FSD Architecture:** Breaking the spaghetti-code cycle.
+2. **State Management:** Thunks, API Abstraction, and strict Memoization.
+3. **UI & Styling:** Tailwind composition with `cn()` and Layout Inversion.
+4. **Clean Code:** Achieving TypeScript-like IntelliSense using pure JSDoc.

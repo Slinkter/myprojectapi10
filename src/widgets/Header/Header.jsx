@@ -1,51 +1,131 @@
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import { FaShoppingCart } from "react-icons/fa";
+import { Link, useLocation } from "react-router-dom";
+import { FaShoppingCart, FaStore, FaBriefcase, FaBook } from "react-icons/fa";
+import { ROUTES } from "@/shared/constants/routes";
+import { selectCartItemCount } from "@/entities/cart/model/cartSlice";
+import { cn } from "@/shared/lib/cn";
 
 /**
- * @description The header component for the application.
- * @returns {JSX.Element} The JSX for the header.
+ * @component Header
+ * @description Header widget that provides navigation and cart monitoring.
+ * Follows 'React Artifact Designer' & 'Tailwind Advanced UI' standards.
+ * Implements semantic tokens and high-fidelity transitions.
+ * @returns {JSX.Element} The rendered Header component.
  */
-const Header = () => {
-  const { items: cartItems } = useSelector((state) => state.cart);
+export function Header() {
+  const cartCount = useSelector(selectCartItemCount);
+  const location = useLocation();
+
+  const navLinks = [
+    { name: "Tienda", path: ROUTES.HOME, icon: <FaStore className="mr-2" /> },
+    { name: "Proyectos", path: ROUTES.PROJECTS, icon: <FaBriefcase className="mr-2" /> },
+    { name: "Reclamaciones", path: ROUTES.RECLAMATION_BOOK, icon: <FaBook className="mr-2" /> },
+  ];
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-md border-b border-gray-100 shadow-sm transition-all duration-300">
-      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+    <header
+      className={cn(
+        "sticky top-0 z-[60] w-full animate-slide-in border-b border-border bg-surface-nav shadow-premium backdrop-blur-xl transition-all duration-300"
+      )}
+      role="banner"
+    >
+      <nav
+        className={cn(
+          "mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:h-20 sm:px-6"
+        )}
+        aria-label="Navegación principal"
+      >
         {/* Logo Area */}
-        <Link to={"/"} className="group">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold text-lg shadow-indigo-200 shadow-lg group-hover:scale-110 transition-transform duration-300">
-              S
-            </div>
-            <h1 className="text-xl font-bold text-gray-900 tracking-tight group-hover:text-indigo-600 transition-colors">
-              STORE<span className="text-indigo-600">.APP</span>
-            </h1>
+        <Link
+          to={ROUTES.HOME}
+          className={cn(
+            "group flex items-center gap-2 rounded-lg p-1 outline-none focus-visible:ring-2 focus-visible:ring-primary sm:gap-3"
+          )}
+          aria-label="Ir al inicio"
+        >
+          <div
+            className={cn(
+              "relative flex h-9 w-9 items-center justify-center rounded-xl bg-primary shadow-glass transition-all duration-300 group-hover:scale-105 sm:h-11 sm:w-11"
+            )}
+          >
+            <FaStore className={cn("text-lg text-white sm:text-xl")} aria-hidden="true" />
+            <div
+              className={cn(
+                "absolute inset-0 rounded-xl bg-white/20 opacity-0 transition-opacity group-hover:opacity-100"
+              )}
+            />
+          </div>
+
+          <div className={cn("flex flex-col")}>
+            <span
+              className={cn(
+                "text-lg font-black uppercase leading-none tracking-tighter text-text-primary sm:text-xl"
+              )}
+            >
+              Store<span className={cn("text-primary-500")}>.</span>API
+            </span>
+            <span
+              className={cn(
+                "mt-1 text-[8px] font-bold uppercase leading-none tracking-widest text-text-muted sm:text-[10px]"
+              )}
+            >
+              Premium V.1.0
+            </span>
           </div>
         </Link>
 
-        {/* Navigation Actions */}
-        <div className="flex items-center gap-8">
-          <Link to={"/"}>
-            <span className="text-sm font-medium text-gray-500 hover:text-indigo-600 transition-colors duration-200">
-              Home
-            </span>
-          </Link>
+        {/* Navigation Links */}
+        <div className={cn("hidden items-center gap-2 md:flex")}>
+          {navLinks.map((link) => {
+            const isActive = location.pathname === link.path;
+            return (
+              <Link
+                key={link.path}
+                to={link.path}
+                className={cn(
+                  "flex items-center rounded-full px-4 py-2 text-sm font-bold transition-all duration-200",
+                  isActive
+                    ? "bg-primary-50 text-primary"
+                    : "text-text-secondary hover:bg-bg-subtle hover:text-primary"
+                )}
+                aria-current={isActive ? "page" : undefined}
+              >
+                {link.name}
+              </Link>
+            );
+          })}
+        </div>
 
-          <Link to={"/cart"} className="relative group p-2">
-            <div className="relative">
-              <FaShoppingCart className="text-2xl text-gray-600 group-hover:text-indigo-600 transition-colors duration-300" />
-              {cartItems.length > 0 && (
-                <span className="absolute -top-3 -right-3 bg-red-500 text-white text-[10px] font-bold h-5 w-5 flex items-center justify-center rounded-full shadow-sm ring-2 ring-white transform group-hover:scale-110 transition-transform">
-                  {cartItems.length}
-                </span>
+        {/* Actions: Cart */}
+        <div className={cn("flex items-center gap-2 sm:gap-4")}>
+          <Link
+            to={ROUTES.CART}
+            className={cn(
+              "group relative flex h-10 w-10 items-center justify-center rounded-full border border-transparent bg-bg-subtle transition-all duration-300 hover:border-primary/10 hover:bg-primary-50 sm:h-11 sm:w-11"
+            )}
+            aria-label={`Ver carrito con ${cartCount} productos`}
+          >
+            <FaShoppingCart
+              className={cn(
+                "text-base transition-colors duration-300 sm:text-lg",
+                cartCount > 0 ? "text-primary" : "text-text-muted group-hover:text-primary"
               )}
-            </div>
+            />
+
+            {cartCount > 0 && (
+              <span
+                className={cn(
+                  "absolute -right-1 -top-1 flex h-5 min-w-[20px] animate-pulse items-center justify-center rounded-full bg-accent px-1 text-[10px] font-bold text-white shadow-lg ring-2 ring-white"
+                )}
+              >
+                {cartCount}
+              </span>
+            )}
           </Link>
         </div>
       </nav>
     </header>
   );
-};
+}
 
 export default Header;
